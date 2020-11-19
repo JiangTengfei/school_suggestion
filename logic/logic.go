@@ -1,13 +1,12 @@
 package logic
 
-
 import (
-	"os"
-	"fmt"
 	"bufio"
+	"fmt"
 	"io"
-	"strings"
+	"os"
 	"strconv"
+	"strings"
 )
 
 var SchoolList []*SchoolInfo
@@ -60,18 +59,18 @@ func Init(filename string) (err error) {
 		trieTree.Add(fmt.Sprintf("%s%d", schoolInfo.SchoolName, schoolInfo.SchoolId), &schoolInfo)
 		//cfmt.Printf("school:%+v\n", schoolInfo)
 	}
-/*
-	for i := 0; i < 1000000; i++ {
-		var schoolInfo SchoolInfo
-		schoolInfo.City = "长沙"
-		schoolInfo.Province = "湖南"
-		schoolInfo.SchoolId = id
-		id++
-		schoolInfo.SchoolName = fmt.Sprintf("学校名字%d", i)
-		SchoolList= append(SchoolList, &schoolInfo)
+	/*
+		for i := 0; i < 1000000; i++ {
+			var schoolInfo SchoolInfo
+			schoolInfo.City = "长沙"
+			schoolInfo.Province = "湖南"
+			schoolInfo.SchoolId = id
+			id++
+			schoolInfo.SchoolName = fmt.Sprintf("学校名字%d", i)
+			SchoolList= append(SchoolList, &schoolInfo)
 
-		trieTree.Add(fmt.Sprintf("%s%d", schoolInfo.SchoolName, schoolInfo.SchoolId), &schoolInfo)
-	}
+			trieTree.Add(fmt.Sprintf("%s%d", schoolInfo.SchoolName, schoolInfo.SchoolId), &schoolInfo)
+		}
 	*/
 	return
 }
@@ -89,13 +88,12 @@ func Search(keyword string, limit int) (schools []*SchoolInfo) {
 	return
 }
 
-
 func SearchV2(keyword string, limit int) (schools []*SchoolInfo) {
-	
+
 	nodes := trieTree.PrefixSearch(keyword, limit)
 	//fmt.Printf("len:%d\n", len(nodes))
 	for _, v := range nodes {
-		school , ok := v.Data.(*SchoolInfo)
+		school, ok := v.Data.(*SchoolInfo)
 		if !ok {
 			fmt.Printf("invalid school data:%v", v)
 			continue

@@ -2,10 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/pingguoxueyuan/school_suggestion/logic"
-	"net/http"
-	"github.com/unrolled/render"
 	"fmt"
+	"github.com/pingguoxueyuan/school_suggestion/logic"
+	"github.com/unrolled/render"
+	"net/http"
 	"time"
 )
 
@@ -15,13 +15,13 @@ var (
 
 func init() {
 	option := render.Options{
-		Directory: "views",
+		Directory:  "../views",
 		Extensions: []string{".tmpl", ".html"},
 	}
 	renderHtml = render.New(option)
 }
 
-func handleIndex(w http.ResponseWriter, r* http.Request) {
+func handleIndex(w http.ResponseWriter, r *http.Request) {
 	renderHtml.HTML(w, http.StatusOK, "index", nil)
 }
 
@@ -32,22 +32,22 @@ func responseSuccess(w http.ResponseWriter, data interface{}) {
 	m["data"] = data
 
 	result, err := json.Marshal(m)
-	if err != nil {	
+	if err != nil {
 		return
 	}
 
 	w.Write(result)
 }
 
-func handleSearch(w http.ResponseWriter, r* http.Request) {
+func handleSearch(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	keyword := r.FormValue("keyword")
 
 	start := time.Now().UnixNano()
 	//schools := logic.SearchV2(keyword, 16)
-	schools := logic.Search(keyword, 16)
+	schools := logic.SearchV2(keyword, 16)
 	end := time.Now().UnixNano()
-	fmt.Printf("暴力:keyword:%s result:%d cost:%d us\n", keyword, len(schools), (end - start)/1000)
+	fmt.Printf("暴力:keyword:%s result:%d cost:%d us\n", keyword, len(schools), (end-start)/1000)
 	responseSuccess(w, schools)
 }
 
@@ -62,7 +62,7 @@ func main() {
 	http.HandleFunc("/index", handleIndex)
 	http.HandleFunc("/school/search", handleSearch)
 	err = http.ListenAndServe(":8080", nil)
-	if err !=nil {
+	if err != nil {
 		fmt.Printf("listen failed, err:%v\n", err)
 		return
 	}

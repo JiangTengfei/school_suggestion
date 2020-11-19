@@ -1,13 +1,13 @@
 package main
 
 import (
-	"github.com/pingguoxueyuan/school_suggestion/logic"
 	"fmt"
+	"github.com/pingguoxueyuan/school_suggestion/logic"
 )
 
-func Init() (err error){
+func Init() (err error) {
 
-	err = logic.Init("./data/school.dat")
+	err = logic.Init("../data/school.dat")
 	if err != nil {
 		return
 	}

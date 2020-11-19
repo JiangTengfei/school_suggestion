@@ -1,14 +1,10 @@
 package logic
-/*
-import (
-	"fmt"
-)
-*/
+
 type Node struct {
-	char rune
+	char   rune
 	childs map[rune]*Node
-	Data interface{}
-	deep int
+	Data   interface{}
+	deep   int
 	isTerm bool
 }
 
@@ -18,18 +14,18 @@ type Trie struct {
 }
 
 func NewNode(char rune, deep int) *Node {
-	node := &Node {
-		char: char,
-		childs:make(map[rune]*Node, 16),
-		deep:deep,
+	node := &Node{
+		char:   char,
+		childs: make(map[rune]*Node, 16),
+		deep:   deep,
 	}
 	return node
 }
 
 func NewTrie() *Trie {
-	trie := &Trie {
+	trie := &Trie{
 		root: NewNode(' ', 1),
-		size:1,
+		size: 1,
 	}
 	return trie
 }
@@ -79,13 +75,12 @@ func (t *Trie) PrefixSearch(key string, limit int) (nodes []*Node) {
 				}
 				continue
 			}
-			
+
 			for _, v := range n.childs {
 				q2 = append(q2, v)
 			}
 		}
 		queue = q2
 	}
-
 	return
 }
